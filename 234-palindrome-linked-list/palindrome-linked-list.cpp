@@ -10,22 +10,63 @@
  */
 class Solution {
 public:
+
+
+
+
+    ListNode* reverse(ListNode* head){
+
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+
+        ListNode* newHead=reverse(head->next);
+        ListNode* front=head->next;
+        front->next=head;
+        head->next=NULL;
+
+        return newHead;
+
+    }
+
+
+
     bool isPalindrome(ListNode* head) {
-        vector<int>arr;
-        while(head!=NULL){
-            arr.push_back(head->val);
-            head=head->next;
-        }
-        int l=0;
-        int r=arr.size()-1;
+        
+        ///finding the middle element using fast and slow pointer approiach
 
-        while(arr[l]==arr[r]){
-            l++;
-            r--;
-            if(l>=r) return true;
+        ListNode* fast=head;
+        ListNode* slow=head;
+        while(fast->next!=NULL && fast->next->next!=NULL){
+            fast=fast->next->next;
+            slow=slow->next;
         }
 
-        return false;
+        /////reversing the second half......
+
+        ListNode* newHead=reverse(slow->next);
+
+        /////camparing the  corresponding ele
+
+        ListNode* first=head;
+        ListNode* second=newHead;
+
+        while(second!=NULL){
+            if(first->val!=second->val){
+
+                reverse(newHead);
+                return false;
+
+            }
+
+            first=first->next;
+            second=second->next;
+            
+        }
+
+        reverse(newHead);
+        return true;
+
 
     }
 };
