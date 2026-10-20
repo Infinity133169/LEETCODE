@@ -26,33 +26,26 @@ public:
 
         if(k==0) return head;
 
-
-
-       
         int cnt=0;
         temp=head;
-        while(temp!=NULL && cnt<(size-k)){
+        while(temp!=NULL && cnt<(size-k-1)){
             cnt++;
             temp=temp->next;
         }
-        while(temp!=NULL){
-            arr.push_back(temp->val);
-            temp=temp->next;
+        ListNode* nextNode=temp->next;
+        temp->next=NULL;
+        temp=nextNode;
+        while(nextNode->next!=NULL){
+            nextNode=nextNode->next;
         }
-        temp=head;
-        cnt=1;
-        while(cnt<=(size-k) && temp!=NULL){
-            arr.push_back(temp->val);
-            temp=temp->next;
-        }
-        temp=head;
-        int i=0;
-        while(temp!=NULL){
-            temp->val=arr[i];
-            i++;
-            temp=temp->next;
-        }
-        return head;
+        nextNode->next=head;
+    
+
+
+
+       
+        
+        return temp;
         
     }
 };
