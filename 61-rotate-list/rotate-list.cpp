@@ -17,6 +17,7 @@ public:
         vector<int>arr;
         int size=0;
         ListNode* temp=head;
+        ListNode* nextNode;
         while(temp!=NULL){
             size++;
             temp=temp->next;
@@ -32,7 +33,7 @@ public:
             cnt++;
             temp=temp->next;
         }
-        ListNode* nextNode=temp->next;
+        nextNode=temp->next;
         temp->next=NULL;
         temp=nextNode;
         while(nextNode->next!=NULL){
