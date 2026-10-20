@@ -10,49 +10,75 @@
  */
 class Solution {
 public:
+
+    ListNode* findKthNode(ListNode* temp,int k){
+        k-=1;
+
+        while(temp!=NULL && k>0){
+
+             k--;
+            temp=temp->next;
+           
+        }
+        return temp;
+
+    }
+
+
+    ListNode* reverse(ListNode* temp){
+        if(temp==NULL || temp->next==NULL) return temp;
+       
+        ListNode* newhead= reverse(temp->next);
+
+        ListNode* front=temp->next;
+        front->next=temp;
+        temp->next=NULL;
+        
+
+        return newhead;
+    }
+
+
     ListNode* reverseKGroup(ListNode* head, int k) {
 
-        if(head==NULL || head->next==NULL || k==1) return head;
 
         ListNode* temp=head;
-        int size=0;
+        ListNode* prevLast=NULL;
+        ListNode* kthNode,*nextNode;
         
 
         while(temp!=NULL){
-            size++;
-            temp=temp->next;
-
-        }
-        vector<int>arr(size);
-        int totalgrp=(size)/k;
-        int groupNO=1;
-        temp=head;
-        while(groupNO<=totalgrp){
-            for(int m=1;m<=k;m++){
-                int i=k*groupNO-m;
-
-                arr[i]=temp->val;
-                temp=temp->next;
-
+            ListNode* kthNode=findKthNode(temp,k);
+            if(kthNode==NULL){
+                if(prevLast){
+                    prevLast->next=temp;
+                }
+                break;
             }
-            groupNO++;
-        }
-        int ind=totalgrp*k;
-        while(temp!=NULL){
-            arr[ind]=temp->val;
-            temp=temp->next;
-            ind++;
+            nextNode=kthNode->next;
+            kthNode->next=NULL;
+            reverse(temp);
+
+            if(temp==head){
+                head=kthNode;
+            }
+            else{
+                prevLast->next=kthNode;
+            }
+            prevLast=temp;
+            temp=nextNode;
+
         }
 
-        temp=head;
-        int i=0;
-        while(temp!=NULL){
-            temp->val=arr[i];
-            i++;
-            temp=temp->next;
-            
-        }
         return head;
+
+
+    
+
+
+
+
+        
 
         
 
