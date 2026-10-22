@@ -13,7 +13,7 @@ public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
 
         if (lists.empty())
-            return nullptr;
+            return NULL;
         if (lists.size() == 1)
             return lists[0];
 
