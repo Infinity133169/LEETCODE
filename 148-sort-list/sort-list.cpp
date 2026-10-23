@@ -10,25 +10,68 @@
  */
 class Solution {
 public:
+
+    ListNode* findMiddle(ListNode* head){
+
+        ListNode* slow=head;
+        ListNode* fast=head->next;
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+
+        return slow;
+
+    }
+
+    ListNode* merge2Sorted(ListNode* head1,ListNode* head2){
+
+        ListNode* dummyNode=new ListNode(-1);
+        ListNode* temp=dummyNode;
+
+        while(head1!=NULL && head2!=NULL){
+            if(head1->val<head2->val){
+
+                temp->next=head1;
+                temp=head1;
+                head1=head1->next;
+
+            }
+            else{
+
+                temp->next=head2;
+                temp=head2;
+                head2=head2->next;
+
+            }
+
+        
+        }
+
+        if(head1) temp->next=head1;
+        else temp->next=head2;
+
+        return dummyNode->next;
+
+    }
+
+
     ListNode* sortList(ListNode* head) {
 
-        ListNode* temp=head;
-        vector<int>arr;
+        if(head==NULL || head->next==NULL) return head;
 
-        while(temp!=NULL){
-            arr.push_back(temp->val);
-            temp=temp->next;
-        }
-        sort(arr.begin(),arr.end());
+        ListNode* middle=findMiddle(head);
+        ListNode* lefthead=head;
+        ListNode* righthead=middle->next;
+        middle->next=NULL;
 
-        temp=head;
+        lefthead=sortList(lefthead);
+        righthead=sortList(righthead);
 
-        for(int i=0;i<arr.size();i++){
-            temp->val=arr[i];
-            temp=temp->next;
-        }
+         return merge2Sorted(lefthead,righthead);
 
-        return head;
+        
+
         
     }
 };
