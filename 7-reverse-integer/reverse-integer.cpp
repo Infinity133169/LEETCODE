@@ -12,12 +12,15 @@ public:
 
 
             
-            if(num*10>INT_MAX || num*10<INT_MIN) return 0;
+          
 
             
     
 
             num=num*10+carry;
+
+            
+            if(num>INT_MAX || num<INT_MIN) return 0;
 
             
 
