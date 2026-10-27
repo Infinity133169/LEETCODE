@@ -8,13 +8,16 @@ public:
             if(num[r]%2==1){
                 break;
             }
+            else{
+                num.erase(r,1);
+            }
             r--;
         }
-        string c="";
-        for(int i=0;i<=r;i++){
-            c+=num[i];
-        }
+        // string c="";
+        // for(int i=0;i<=r;i++){
+        //     c+=num[i];
+        // }
 
-        return c;
+        return num;
     }
 };
